@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Search, ChevronRight, ExternalLink, Star, Filter, Grid3X3, List, Tag } from "lucide-react";
+import { Search, ChevronRight, ExternalLink, Star, Grid3X3, List, Tag } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
+import { useCms } from "@/contexts/CmsContext";
 
 const subcategories = [
   { label: "All Resources", slug: "resources" },
@@ -17,23 +18,9 @@ const subcategories = [
 const pricingFilters = ["All", "Free", "Freemium", "Paid"];
 const sortOptions = ["Most Popular", "Highest Rated", "Newest", "A–Z"];
 
-const resources = [
-  { id: "1", name: "ChatGPT", description: "AI assistant for coding, writing, research, and brainstorming. Supports code generation, debugging, and learning.", icon: "🤖", category: "AI Tools", rating: 4.8, reviews: 1240, pricing: "Freemium", tags: ["AI", "Coding", "Writing"], url: "#", featured: true },
-  { id: "2", name: "GitHub Copilot", description: "AI pair programmer that suggests code completions and entire functions in your editor.", icon: "🧑‍💻", category: "AI Tools", rating: 4.7, reviews: 890, pricing: "Paid", tags: ["AI", "IDE", "Coding"], url: "#", featured: true },
-  { id: "3", name: "freeCodeCamp", description: "Free full-stack web development curriculum with interactive lessons and certifications.", icon: "🔥", category: "Free Courses", rating: 4.9, reviews: 2100, pricing: "Free", tags: ["Learning", "Web Dev", "Certification"], url: "#", featured: true },
-  { id: "4", name: "Figma", description: "Collaborative design tool for creating UI/UX designs, prototypes, and design systems.", icon: "🎨", category: "Dev Tools", rating: 4.8, reviews: 1560, pricing: "Freemium", tags: ["Design", "UI/UX", "Collaboration"], url: "#", featured: false },
-  { id: "5", name: "Vercel", description: "Deploy frontend applications with zero configuration. Supports Next.js and more.", icon: "▲", category: "Dev Tools", rating: 4.7, reviews: 780, pricing: "Freemium", tags: ["Hosting", "Deployment", "Frontend"], url: "#", featured: false },
-  { id: "6", name: "Notion", description: "All-in-one workspace for notes, documentation, project management, and wikis.", icon: "📝", category: "Free Tools", rating: 4.6, reviews: 1890, pricing: "Freemium", tags: ["Productivity", "Notes", "Docs"], url: "#", featured: false },
-  { id: "7", name: "AWS Cloud Practitioner", description: "Foundation-level AWS certification covering cloud concepts and services.", icon: "☁️", category: "Certifications", rating: 4.5, reviews: 650, pricing: "Paid", tags: ["Cloud", "AWS", "Certification"], url: "#", featured: false },
-  { id: "8", name: "The Odin Project", description: "Free, open-source curriculum for learning full-stack web development.", icon: "⚔️", category: "Free Courses", rating: 4.8, reviews: 1340, pricing: "Free", tags: ["Learning", "Full Stack", "Open Source"], url: "#", featured: false },
-  { id: "9", name: "Cursor", description: "AI-first code editor built on VS Code with deep AI integration for code generation.", icon: "✦", category: "AI Tools", rating: 4.6, reviews: 420, pricing: "Freemium", tags: ["AI", "Editor", "Coding"], url: "#", featured: false },
-  { id: "10", name: "Linear", description: "Project management tool built for speed. Track issues and plan projects efficiently.", icon: "🔲", category: "Dev Tools", rating: 4.7, reviews: 560, pricing: "Freemium", tags: ["Project Management", "Issues", "Teams"], url: "#", featured: false },
-  { id: "11", name: "Google UX Design Certificate", description: "Professional certificate program by Google covering UX design fundamentals.", icon: "🎓", category: "Certifications", rating: 4.6, reviews: 980, pricing: "Paid", tags: ["UX", "Design", "Google"], url: "#", featured: false },
-  { id: "12", name: "Excalidraw", description: "Virtual whiteboard for sketching diagrams and visualizing ideas collaboratively.", icon: "✏️", category: "Free Tools", rating: 4.5, reviews: 720, pricing: "Free", tags: ["Whiteboard", "Diagrams", "Collaboration"], url: "#", featured: false },
-];
-
 const ResourcesDirectoryPage = () => {
   const { slug } = useParams();
+  const { state } = useCms();
   const [activePricing, setActivePricing] = useState("All");
   const [activeSort, setActiveSort] = useState("Most Popular");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -45,7 +32,14 @@ const ResourcesDirectoryPage = () => {
 
   const activeSubcat = slug && slug !== "resources" ? slug : null;
 
-  const filtered = resources.filter((r) => {
+  const sortedResources = [...state.resources].sort((a, b) => {
+    if (activeSort === "Highest Rated") return b.rating - a.rating;
+    if (activeSort === "A–Z") return a.name.localeCompare(b.name);
+    if (activeSort === "Most Popular") return b.reviews - a.reviews;
+    return 0;
+  });
+
+  const filtered = sortedResources.filter((r) => {
     if (activeSubcat) {
       const catSlug = r.category.toLowerCase().replace(/\s+/g, "-");
       if (catSlug !== activeSubcat) return false;
@@ -62,7 +56,6 @@ const ResourcesDirectoryPage = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <main className="max-w-[1320px] mx-auto px-6 py-8">
-        {/* Breadcrumbs */}
         <ScrollReveal direction="up">
           <div className="flex items-center gap-2 text-sm mb-6">
             <Link to="/" className="text-category hover:underline">Home</Link>
@@ -77,7 +70,6 @@ const ResourcesDirectoryPage = () => {
           </div>
         </ScrollReveal>
 
-        {/* Header */}
         <ScrollReveal direction="up" delay={0.05}>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
             <div>
@@ -96,7 +88,6 @@ const ResourcesDirectoryPage = () => {
           </div>
         </ScrollReveal>
 
-        {/* Subcategory Tabs */}
         <ScrollReveal direction="up" delay={0.1}>
           <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2">
             {subcategories.map((s) => (
@@ -115,7 +106,6 @@ const ResourcesDirectoryPage = () => {
           </div>
         </ScrollReveal>
 
-        {/* Filters Row */}
         <ScrollReveal direction="up" delay={0.15}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-2 flex-wrap">
@@ -158,7 +148,6 @@ const ResourcesDirectoryPage = () => {
           </div>
         </ScrollReveal>
 
-        {/* Featured Resources */}
         {featuredResources.length > 0 && (
           <div className="mb-8">
             <ScrollReveal direction="up">
@@ -169,7 +158,7 @@ const ResourcesDirectoryPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               {featuredResources.map((r, i) => (
                 <ScrollReveal key={r.id} direction="up" delay={0.1 + i * 0.08}>
-                  <a href={r.url} target="_blank" rel="noopener noreferrer" className="glass-panel rounded-xl p-5 card-hover-glass group block relative overflow-hidden border border-primary/15">
+                  <a href={r.url || "#"} target="_blank" rel="noopener noreferrer" className="glass-panel rounded-xl p-5 card-hover-glass group block relative overflow-hidden border border-primary/15">
                     <div className="flex items-start gap-3 mb-3">
                       <span className="text-3xl">{r.icon}</span>
                       <div className="flex-1 min-w-0">
@@ -208,12 +197,11 @@ const ResourcesDirectoryPage = () => {
           </div>
         )}
 
-        {/* Resource Grid/List */}
         {viewMode === "grid" ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {regularResources.map((r, i) => (
               <ScrollReveal key={r.id} direction="up" delay={0.05 + i * 0.04}>
-                <a href={r.url} target="_blank" rel="noopener noreferrer" className="glass-panel rounded-xl p-4 card-hover-glass group block">
+                <a href={r.url || "#"} target="_blank" rel="noopener noreferrer" className="glass-panel rounded-xl p-4 card-hover-glass group block">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">{r.icon}</span>
                     <div className="flex-1 min-w-0">
@@ -248,7 +236,7 @@ const ResourcesDirectoryPage = () => {
           <div className="space-y-3">
             {regularResources.map((r, i) => (
               <ScrollReveal key={r.id} direction="up" delay={0.05 + i * 0.04}>
-                <a href={r.url} target="_blank" rel="noopener noreferrer" className="glass-panel rounded-xl p-4 card-hover-glass group flex items-center gap-4">
+                <a href={r.url || "#"} target="_blank" rel="noopener noreferrer" className="glass-panel rounded-xl p-4 card-hover-glass group flex items-center gap-4">
                   <span className="text-2xl flex-shrink-0">{r.icon}</span>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
@@ -278,6 +266,14 @@ const ResourcesDirectoryPage = () => {
               </ScrollReveal>
             ))}
           </div>
+        )}
+
+        {filtered.length === 0 && (
+          <ScrollReveal direction="up">
+            <div className="text-center py-16">
+              <p className="text-muted-foreground">No resources found. Try adjusting your filters.</p>
+            </div>
+          </ScrollReveal>
         )}
       </main>
       <Footer />

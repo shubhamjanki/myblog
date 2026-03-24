@@ -2,20 +2,23 @@ import { useState } from "react";
 import { Link, useLocation, Outlet, Navigate } from "react-router-dom";
 import {
   LayoutDashboard, FileText, Image, FolderOpen, Tag, MessageSquare, Settings,
-  Menu, X, Search, Bell, ChevronDown, LogOut, User, Users, Shield, PenLine
+  Menu, X, Search, Bell, ChevronDown, LogOut, User, Users, Shield, PenLine,
+  Briefcase, BookOpen
 } from "lucide-react";
 import { useCms } from "@/contexts/CmsContext";
 import { useAuth } from "@/contexts/AuthContext";
 
 const allNavItems = [
-  { label: "Dashboard",  path: "/cms",            icon: LayoutDashboard, adminOnly: false },
-  { label: "Posts",      path: "/cms/posts",       icon: FileText,        adminOnly: false },
-  { label: "Media",      path: "/cms/media",       icon: Image,           adminOnly: false },
-  { label: "Categories", path: "/cms/categories",  icon: FolderOpen,      adminOnly: true  },
-  { label: "Tags",       path: "/cms/tags",        icon: Tag,             adminOnly: true  },
-  { label: "Comments",   path: "/cms/comments",    icon: MessageSquare,   adminOnly: true  },
-  { label: "Users",      path: "/cms/users",       icon: Users,           adminOnly: true  },
-  { label: "Settings",   path: "/cms/settings",    icon: Settings,        adminOnly: true  },
+  { label: "Dashboard",     path: "/cms",                icon: LayoutDashboard, adminOnly: false },
+  { label: "Posts",         path: "/cms/posts",          icon: FileText,        adminOnly: false },
+  { label: "Media",         path: "/cms/media",          icon: Image,           adminOnly: false },
+  { label: "Opportunities", path: "/cms/opportunities",  icon: Briefcase,       adminOnly: true  },
+  { label: "Resources",     path: "/cms/resources",      icon: BookOpen,        adminOnly: true  },
+  { label: "Categories",    path: "/cms/categories",     icon: FolderOpen,      adminOnly: true  },
+  { label: "Tags",          path: "/cms/tags",           icon: Tag,             adminOnly: true  },
+  { label: "Comments",      path: "/cms/comments",       icon: MessageSquare,   adminOnly: true  },
+  { label: "Users",         path: "/cms/users",          icon: Users,           adminOnly: true  },
+  { label: "Settings",      path: "/cms/settings",       icon: Settings,        adminOnly: true  },
 ];
 
 const pageTitle: Record<string, string> = {
@@ -23,6 +26,8 @@ const pageTitle: Record<string, string> = {
   "/cms/posts": "Posts",
   "/cms/posts/new": "New Post",
   "/cms/media": "Media Library",
+  "/cms/opportunities": "Opportunities",
+  "/cms/resources": "Resources",
   "/cms/categories": "Categories",
   "/cms/tags": "Tags",
   "/cms/comments": "Comments",
@@ -37,7 +42,6 @@ export default function CmsLayout() {
   const { state } = useCms();
   const { user, profile, isAdmin, isWriter, signOut, loading } = useAuth();
 
-  // Route guard — redirect unauthenticated users
   if (!loading && !user) {
     return <Navigate to={`/auth?redirect=${encodeURIComponent(location.pathname)}`} replace />;
   }
@@ -63,17 +67,14 @@ export default function CmsLayout() {
 
   return (
     <div className="min-h-screen flex" style={{ background: "#0f1117", color: "#f1f0eb" }}>
-      {/* Sidebar overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 bg-black/60 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
       )}
 
-      {/* Sidebar */}
       <aside
         className={`fixed lg:static inset-y-0 left-0 z-50 w-60 flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
         style={{ background: "#13151f" }}
       >
-        {/* Logo */}
         <div className="flex items-center justify-between px-5 h-16 border-b" style={{ borderColor: "#2a2d3e" }}>
           <Link to="/cms" className="font-bold text-lg tracking-tight" style={{ fontFamily: "'Playfair Display', serif", color: "#f59e0b" }}>
             TechVerse CMS
@@ -83,7 +84,6 @@ export default function CmsLayout() {
           </button>
         </div>
 
-        {/* Role indicator */}
         <div className="px-4 py-3 border-b" style={{ borderColor: "#2a2d3e22" }}>
           <div className="flex items-center gap-2.5">
             <div
@@ -105,7 +105,6 @@ export default function CmsLayout() {
           </div>
         </div>
 
-        {/* Nav */}
         <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
           {navItems.map((item, i) => {
             const active = location.pathname === item.path ||
@@ -136,7 +135,6 @@ export default function CmsLayout() {
           })}
         </nav>
 
-        {/* Footer */}
         <div className="px-3 pb-4 space-y-1">
           <Link
             to="/"
@@ -149,9 +147,7 @@ export default function CmsLayout() {
         </div>
       </aside>
 
-      {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Header */}
         <header
           className="h-16 flex items-center justify-between px-4 lg:px-6 border-b shrink-0"
           style={{ background: "#13151f", borderColor: "#2a2d3e" }}
@@ -176,7 +172,6 @@ export default function CmsLayout() {
               </button>
             )}
 
-            {/* User menu */}
             <div className="relative">
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -226,7 +221,6 @@ export default function CmsLayout() {
           </div>
         </header>
 
-        {/* Content */}
         <main className="flex-1 overflow-y-auto p-4 lg:p-6">
           <div className="max-w-7xl mx-auto">
             <Outlet />

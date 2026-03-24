@@ -26,6 +26,8 @@ import CmsCategoriesTags from "./pages/cms/CmsCategoriesTags";
 import CmsComments from "./pages/cms/CmsComments";
 import CmsSettings from "./pages/cms/CmsSettings";
 import CmsUsers from "./pages/cms/CmsUsers";
+import CmsOpportunities from "./pages/cms/CmsOpportunities";
+import CmsResources from "./pages/cms/CmsResources";
 
 const queryClient = new QueryClient();
 
@@ -40,7 +42,6 @@ const App = () => (
           <AuthProvider>
             <CmsProvider>
               <Routes>
-                {/* Public routes */}
                 <Route path="/" element={<Index />} />
                 <Route path="/category/:slug" element={<CategoryPage />} />
                 <Route path="/article" element={<ArticlePage />} />
@@ -51,16 +52,16 @@ const App = () => (
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/profile/:username" element={<ProfilePage />} />
 
-                {/* Access denied page — outside CmsLayout so it renders without sidebar */}
                 <Route path="/cms/unauthorized" element={<CmsUnauthorized />} />
 
-                {/* CMS Routes — CmsLayout itself enforces auth + role check */}
                 <Route path="/cms" element={<CmsLayout />}>
                   <Route index element={<CmsDashboard />} />
                   <Route path="posts" element={<CmsPostList />} />
                   <Route path="posts/new" element={<CmsPostEditor />} />
                   <Route path="posts/edit/:id" element={<CmsPostEditor />} />
                   <Route path="media" element={<CmsMediaLibrary />} />
+                  <Route path="opportunities" element={<CmsOpportunities />} />
+                  <Route path="resources" element={<CmsResources />} />
                   <Route path="categories" element={<CmsCategoriesTags mode="categories" />} />
                   <Route path="tags" element={<CmsCategoriesTags mode="tags" />} />
                   <Route path="comments" element={<CmsComments />} />

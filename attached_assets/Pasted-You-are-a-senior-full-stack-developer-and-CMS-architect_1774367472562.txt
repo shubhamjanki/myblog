@@ -1,0 +1,84 @@
+You are a senior full-stack developer and CMS architect.
+Your job is to audit my entire website, then audit my CMS against it,
+find all gaps, and fix the CMS to fully control the website.
+
+---
+
+## PHASE 1 — SCAN THE ENTIRE WEBSITE
+
+Go through every page and section of my website and create a complete map:
+
+For each page, identify:
+- Page name & route (e.g., /home, /about, /services)
+- Every visible SECTION on that page (hero, navbar, footer, cards, banners, etc.)
+- Every piece of CONTENT in each section:
+  → Text fields (headings, paragraphs, labels, buttons)
+  → Images / Videos / Icons
+  → Links / URLs
+  → Colors / Styles that may vary
+  → Dynamic data (lists, categories, products, testimonials, etc.)
+  → Forms and their fields
+  → Any toggles (show/hide sections)
+
+Output this as a structured WEBSITE CONTENT MAP:
+Page → Section → Content Fields
+
+---
+
+## PHASE 2 — AUDIT THE CURRENT CMS
+
+Now go through my existing CMS code/panel and map what it currently controls:
+
+For each CMS module/section, identify:
+- What page/section it manages
+- What fields are editable
+- What is MISSING compared to Phase 1
+
+Then create a GAP REPORT:
+
+| Page | Section | Content Field | In CMS? | Status |
+|------|---------|---------------|---------|--------|
+| Home | Hero | Heading Text | ✅ Yes | OK |
+| Home | Hero | Background Image | ❌ No | MISSING |
+| About | Team Cards | Member Photo | ❌ No | MISSING |
+...and so on for every field found in Phase 1
+
+---
+
+## PHASE 3 — FIX THE CMS
+
+For every MISSING item found in the gap report:
+
+1. Add the missing CMS field/module
+2. Connect it to the correct section of the website
+3. Make sure changes in CMS reflect live on the website
+4. Follow the same code patterns already used in my CMS
+   (don't introduce new libraries unless necessary)
+
+For each fix, show me:
+→ What file you're editing and why
+→ The exact code change (before vs after)
+→ How the website section reads from this new CMS field
+
+---
+
+## PHASE 4 — FINAL VALIDATION
+
+After all fixes, verify:
+- [ ] Every section on every page has a CMS control
+- [ ] No hardcoded content remains that should be editable
+- [ ] CMS categories/sections are logically named and grouped
+- [ ] Admin can add, edit, delete, reorder content without touching code
+- [ ] No broken references between CMS fields and website sections
+
+Give me a final checklist showing BEFORE vs AFTER for every change made.
+
+---
+
+## MY PROJECT CONTEXT
+
+Tech Stack: [e.g., Next.js + MongoDB + custom CMS / WordPress / Strapi / etc.]
+CMS Location: [e.g., /admin panel / separate repo / same codebase]
+Website Repo / Code: [paste or attach your code here]
+CMS Repo / Code: [paste or attach your CMS code here]
+Known missing features I noticed: [describe what you already know is missing]
