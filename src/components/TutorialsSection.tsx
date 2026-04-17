@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeader from "@/components/SectionHeader";
 import PostCard from "@/components/PostCard";
@@ -48,7 +50,7 @@ const TutorialsSection = () => {
       <SectionHeader label="Popular Tutorials" viewMoreLink="/category/tutorials" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {tutorials.map((post, i) => (
-          <Link key={post.id} to={`/article/${post.slug}`} className="block">
+          <Link key={post.id} href={`/article/${post.slug}`} className="block">
             <PostCard
               title={post.title}
               image={post.coverImage || fallbackImages[i % fallbackImages.length]}

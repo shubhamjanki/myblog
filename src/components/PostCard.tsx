@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import LazyImage from "@/components/LazyImage";
 
@@ -30,7 +32,7 @@ const PostCard = ({
   if (variant === "featured") {
     return (
       <ScrollReveal direction="up" delay={delay}>
-        <Link to={linkTo} className="relative rounded-2xl overflow-hidden h-[320px] cursor-pointer group card-hover-glass block">
+        <Link href={linkTo} className="relative rounded-2xl overflow-hidden h-[320px] cursor-pointer group card-hover-glass block">
           <LazyImage src={image} alt={title} containerClassName="lux-image h-full" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
           <div className="absolute top-4 left-4">
@@ -53,7 +55,7 @@ const PostCard = ({
   if (variant === "horizontal") {
     return (
       <ScrollReveal direction="up" delay={delay}>
-        <Link to={linkTo} className="flex gap-4 cursor-pointer group card-hover-glass rounded-xl p-2">
+        <Link href={linkTo} className="flex gap-4 cursor-pointer group card-hover-glass rounded-xl p-2">
           <LazyImage src={image} alt={title} containerClassName="lux-image w-[120px] h-[90px] flex-shrink-0 rounded-lg" className="w-full h-full object-cover" />
           <div className="flex flex-col justify-center flex-1 min-w-0">
             <div className="flex items-center gap-2 text-xs mb-1">
@@ -79,7 +81,7 @@ const PostCard = ({
   // vertical (default)
   return (
     <ScrollReveal direction="up" delay={delay}>
-      <Link to={linkTo} className="cursor-pointer group card-hover-glass glass-panel rounded-xl p-2.5 pb-3 block">
+      <Link href={linkTo} className="cursor-pointer group card-hover-glass glass-panel rounded-xl p-2.5 pb-3 block">
         <LazyImage src={image} alt={title} containerClassName="lux-image h-[150px] mb-2" className="w-full h-full object-cover" />
         <div className="flex items-center gap-2 text-xs mb-1">
           <span className="text-category font-medium">{category}</span>

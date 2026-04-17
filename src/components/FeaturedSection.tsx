@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import LazyImage from "@/components/LazyImage";
 import { SkeletonSection } from "@/components/skeletons";
@@ -46,7 +48,7 @@ const FeaturedSection = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
 
           <ScrollReveal direction="up" delay={0.3} className="absolute bottom-0 left-0 z-10">
-            <Link to={`/article/${mainPost.slug}`} className="block glass-panel rounded-tr-2xl p-6 md:p-8 max-w-md">
+            <Link href={`/article/${mainPost.slug}`} className="block glass-panel rounded-tr-2xl p-6 md:p-8 max-w-md">
               <div className="inline-block bg-muted/60 backdrop-blur-sm px-3 py-1 rounded-md mb-4">
                 <span className="text-xs font-semibold tracking-wider uppercase text-foreground border-l-2 border-primary pl-2">
                   Featured
@@ -71,7 +73,7 @@ const FeaturedSection = () => {
             <ScrollReveal direction="right" delay={0.4} className="absolute top-0 right-0 bottom-0 z-10 hidden md:block">
               <div className="h-full w-[280px] bg-foreground/70 backdrop-blur-xl p-5 flex flex-col justify-center gap-5">
                 {sidebarPosts.map((article, i) => (
-                  <Link key={article.id} to={`/article/${article.slug}`} className="cursor-pointer group">
+                  <Link key={article.id} href={`/article/${article.slug}`} className="cursor-pointer group">
                     {i > 0 && <div className="w-6 h-0.5 bg-primary-foreground/30 mb-4" />}
                     <div className="flex items-center gap-2 text-xs mb-1.5">
                       <span className="text-primary-foreground/70 font-medium">{article.category}</span>

@@ -1,6 +1,8 @@
+"use client";
+
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import card1 from "@/assets/article-card-1.jpg";
 import card2 from "@/assets/article-card-2.jpg";
@@ -37,7 +39,7 @@ const TrendingSection = () => {
                   Trending Now
                 </span>
               </div>
-              <Link to="/category" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
+              <Link href="/category" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
                 View more <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -54,7 +56,7 @@ const TrendingSection = () => {
                 <span className="text-sm text-muted-foreground">#Ethereum</span>
                 <span className="text-sm text-muted-foreground">#Analytics</span>
               </div>
-              <Link to="/category" className="lux-button flex items-center gap-2 border border-border/60 rounded-full px-5 py-2.5 text-sm font-medium text-foreground w-fit">
+              <Link href="/category" className="lux-button flex items-center gap-2 border border-border/60 rounded-full px-5 py-2.5 text-sm font-medium text-foreground w-fit">
                 Read article
                 <ArrowRight className="w-4 h-4" />
               </Link>

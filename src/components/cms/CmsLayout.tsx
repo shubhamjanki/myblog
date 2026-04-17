@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { Link, useLocation, Outlet, Navigate } from "react-router-dom";
+"use client";
+
+import { useState, type ReactNode } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard, FileText, Image, FolderOpen, Tag, MessageSquare, Settings,
   Menu, X, Search, Bell, ChevronDown, LogOut, User, Users, Shield, PenLine,
@@ -35,24 +38,27 @@ const pageTitle: Record<string, string> = {
   "/cms/settings": "Settings",
 };
 
-export default function CmsLayout() {
+export default function CmsLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
+  const router = useRouter();
   const { state } = useCms();
   const { user, profile, isAdmin, isWriter, signOut, loading } = useAuth();
 
   if (!loading && !user) {
-    return <Navigate to={`/auth?redirect=${encodeURIComponent(location.pathname)}`} replace />;
+    router.replace(`/auth?redirect=${encodeURIComponent(pathname)}`);
+    return null;
   }
   if (!loading && !isAdmin && !isWriter) {
-    return <Navigate to="/cms/unauthorized" replace />;
+    router.replace("/cms/unauthorized");
+    return null;
   }
 
   const navItems = allNavItems.filter(item => !item.adminOnly || isAdmin);
   const pendingComments = state.comments.filter(c => c.status === "pending").length;
-  const currentTitle = pageTitle[location.pathname] ||
-    (location.pathname.startsWith("/cms/posts/edit") ? "Edit Post" : "CMS");
+  const currentTitle = pageTitle[pathname] ||
+    (pathname.startsWith("/cms/posts/edit") ? "Edit Post" : "CMS");
 
   const displayName = profile?.display_name || profile?.username || user?.email?.split("@")[0] || "User";
   const avatarLetter = displayName[0]?.toUpperCase() ?? "U";
@@ -76,7 +82,7 @@ export default function CmsLayout() {
         style={{ background: "#13151f" }}
       >
         <div className="flex items-center justify-between px-5 h-16 border-b" style={{ borderColor: "#2a2d3e" }}>
-          <Link to="/cms" className="font-bold text-lg tracking-tight" style={{ fontFamily: "'Playfair Display', serif", color: "#f59e0b" }}>
+          <Link href="/cms" className="font-bold text-lg tracking-tight" style={{ fontFamily: "'Playfair Display', serif", color: "#f59e0b" }}>
             TechVerse CMS
           </Link>
           <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-1 rounded hover:bg-white/10">
@@ -107,13 +113,13 @@ export default function CmsLayout() {
 
         <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
           {navItems.map((item, i) => {
-            const active = location.pathname === item.path ||
-              (item.path !== "/cms" && location.pathname.startsWith(item.path + "/"));
-            const finalActive = item.path === "/cms" ? location.pathname === item.path : active;
+            const active = pathname === item.path ||
+              (item.path !== "/cms" && pathname.startsWith(item.path + "/"));
+            const finalActive = item.path === "/cms" ? pathname === item.path : active;
             return (
               <Link
                 key={item.path}
-                to={item.path}
+                href={item.path}
                 onClick={() => setSidebarOpen(false)}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200"
                 style={{
@@ -137,7 +143,7 @@ export default function CmsLayout() {
 
         <div className="px-3 pb-4 space-y-1">
           <Link
-            to="/"
+            href="/"
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors hover:bg-white/5"
             style={{ color: "#9ca3af" }}
           >
@@ -201,7 +207,7 @@ export default function CmsLayout() {
                   </div>
                   {profile?.username && (
                     <Link
-                      to={`/profile/${profile.username}`}
+                      href={`/profile/${profile.username}`}
                       onClick={() => setUserMenuOpen(false)}
                       className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-white/5"
                     >
@@ -223,7 +229,7 @@ export default function CmsLayout() {
 
         <main className="flex-1 overflow-y-auto p-4 lg:p-6">
           <div className="max-w-7xl mx-auto">
-            <Outlet />
+            {children}
           </div>
         </main>
       </div>

@@ -1,5 +1,8 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Home, Newspaper, Briefcase, GraduationCap, Search } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
 
 const items = [
   { label: "Home", icon: Home, path: "/" },
@@ -10,7 +13,10 @@ const items = [
 ];
 
 const BottomNav = () => {
-  const { pathname } = useLocation();
+  const pathname = usePathname();
+
+  // Don't show on CMS or auth pages
+  if (pathname.startsWith("/cms") || pathname === "/auth") return null;
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
@@ -21,7 +27,7 @@ const BottomNav = () => {
             return (
               <Link
                 key={item.label}
-                to={item.path}
+                href={item.path}
                 className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-colors duration-200 min-w-[56px] ${
                   isActive
                     ? "text-primary"

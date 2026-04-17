@@ -1,3 +1,5 @@
+"use client";
+
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeader from "@/components/SectionHeader";
 import ResourceCard from "@/components/ResourceCard";

@@ -1,6 +1,8 @@
+"use client";
+
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import LazyImage from "@/components/LazyImage";
 import { SkeletonSection } from "@/components/skeletons";
@@ -53,7 +55,7 @@ const BestOfMonth = () => {
               Best of the Month
             </span>
           </div>
-          <Link to="/category/tech-blog" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
+          <Link href="/category/tech-blog" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
             View more <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -62,7 +64,7 @@ const BestOfMonth = () => {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
         {articles.map((article, i) => (
           <ScrollReveal key={article.id} delay={0.1 + i * 0.08} direction="up">
-            <Link to={`/article/${article.slug}`} className="block cursor-pointer group card-hover-glass">
+            <Link href={`/article/${article.slug}`} className="block cursor-pointer group card-hover-glass">
               <LazyImage
                 src={article.coverImage || fallbackImages[i % fallbackImages.length]}
                 alt={article.title}

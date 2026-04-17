@@ -1,0 +1,3 @@
+"use client";
+import CmsCategoriesTags from "@/views/cms/CmsCategoriesTags";
+export default function CmsCategoriesPage() { return <CmsCategoriesTags mode="categories" />; }

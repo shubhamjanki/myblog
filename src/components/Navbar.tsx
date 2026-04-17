@@ -1,5 +1,8 @@
+"use client";
+
 import { Search, ChevronDown, Globe, LogIn, User, LayoutDashboard, LogOut, Menu, X, Loader2 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import ScrollReveal from "@/components/ScrollReveal";
 import ThemeToggle from "@/components/ThemeToggle";
 import { useAuth } from "@/contexts/AuthContext";
@@ -74,7 +77,7 @@ interface SearchResult {
 
 const Navbar = () => {
   const { user, profile, isAdmin, isWriter, signOut } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [showMenu, setShowMenu] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -143,7 +146,7 @@ const Navbar = () => {
       <nav className="relative isolate flex items-center justify-between px-4 md:px-6 py-3 glass-panel rounded-2xl mx-4 md:mx-6 mt-4">
         {/* Left: Logo + Nav */}
         <div className="flex items-center gap-3 md:gap-6">
-          <Link to="/" className="flex items-center gap-2 font-display font-bold text-lg text-foreground">
+          <Link href="/" className="flex items-center gap-2 font-display font-bold text-lg text-foreground">
             <Globe className="w-5 h-5 text-primary" />
             <span>Logo</span>
           </Link>
@@ -164,8 +167,7 @@ const Navbar = () => {
                 onMouseEnter={() => setActiveDropdown(item.label)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <Link
-                  to={item.path}
+                <Link href={item.path}
                   className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground/70 hover:text-foreground rounded-lg transition-all duration-300 hover:bg-muted/60"
                 >
                   {item.label}
@@ -290,14 +292,14 @@ const Navbar = () => {
               {showMenu && (
                 <div className="absolute right-0 top-full mt-2 w-48 glass-panel rounded-xl p-2 z-50">
                   <button
-                    onClick={() => { navigate(`/profile/${profile?.username || "me"}`); setShowMenu(false); }}
+                    onClick={() => { router.push(`/profile/${profile?.username || "me"}`); setShowMenu(false); }}
                     className="w-full flex items-center gap-2 px-3 py-2 text-sm text-foreground hover:bg-muted/60 rounded-lg transition-colors"
                   >
                     <User className="w-4 h-4" /> My Profile
                   </button>
                   {(isAdmin || isWriter) && (
                     <button
-                      onClick={() => { navigate("/admin"); setShowMenu(false); }}
+                      onClick={() => { router.push("/admin"); setShowMenu(false); }}
                       className="w-full flex items-center gap-2 px-3 py-2 text-sm text-foreground hover:bg-muted/60 rounded-lg transition-colors"
                     >
                       <LayoutDashboard className="w-4 h-4" /> Dashboard
@@ -313,8 +315,7 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            <Link
-              to="/auth"
+            <Link href="/auth"
               className="lux-button flex items-center gap-1.5 bg-foreground text-background px-4 py-1.5 rounded-xl text-sm font-medium"
             >
               <LogIn className="w-3.5 h-3.5" /> Sign In
@@ -380,8 +381,7 @@ const Navbar = () => {
           <div className="absolute top-full left-0 right-0 mt-2 mx-2 glass-panel rounded-2xl p-4 z-50 lg:hidden max-h-[70vh] overflow-y-auto">
             {navStructure.map((item) => (
               <div key={item.label} className="mb-3">
-                <Link
-                  to={item.path}
+                <Link href={item.path}
                   onClick={() => setMobileOpen(false)}
                   className="text-sm font-semibold text-foreground px-3 py-2 block"
                 >

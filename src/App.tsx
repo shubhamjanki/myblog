@@ -1,3 +1,5 @@
+"use client";
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,7 +35,7 @@ import BottomNav from "./components/BottomNav";
 const queryClient = new QueryClient();
 
 function AppBottomNav() {
-  const { pathname } = useLocation();
+  const pathname = usePathname();
   if (pathname.startsWith("/cms") || pathname === "/auth") return null;
   return <BottomNav />;
 }

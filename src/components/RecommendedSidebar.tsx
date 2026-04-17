@@ -1,5 +1,7 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import LazyImage from "@/components/LazyImage";
 import { SkeletonSidebar } from "@/components/skeletons";
@@ -37,7 +39,7 @@ const RecommendedSidebar = () => {
       <div className="glass-panel rounded-2xl p-5">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-display font-semibold text-lg text-foreground">Recommended</h2>
-          <Link to="/category/tech-blog" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
+          <Link href="/category/tech-blog" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
             View all <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -50,7 +52,7 @@ const RecommendedSidebar = () => {
           {articles.map((article, i) => (
             <ScrollReveal key={article.id} delay={0.3 + i * 0.08} direction="right">
               {i === 0 ? (
-                <Link to={`/article/${article.slug}`} className="relative rounded-xl overflow-hidden h-[180px] cursor-pointer group card-hover-glass block">
+                <Link href={`/article/${article.slug}`} className="relative rounded-xl overflow-hidden h-[180px] cursor-pointer group card-hover-glass block">
                   <LazyImage src={article.coverImage || fallbackImages[0]} alt={article.title} containerClassName="lux-image h-full" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -62,7 +64,7 @@ const RecommendedSidebar = () => {
                   </div>
                 </Link>
               ) : (
-                <Link to={`/article/${article.slug}`} className="flex items-start gap-3 cursor-pointer group py-2 px-2 rounded-xl card-hover-glass">
+                <Link href={`/article/${article.slug}`} className="flex items-start gap-3 cursor-pointer group py-2 px-2 rounded-xl card-hover-glass">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 text-xs mb-1">
                       <span className="text-category font-medium">{article.category}</span>

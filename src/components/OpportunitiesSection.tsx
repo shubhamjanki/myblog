@@ -1,5 +1,7 @@
+"use client";
+
 import { Briefcase, GraduationCap, Trophy, Award } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeader from "@/components/SectionHeader";
 import { SkeletonSection } from "@/components/skeletons";
@@ -48,8 +50,7 @@ const OpportunitiesSection = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {opportunities.map((opp, i) => (
           <ScrollReveal key={opp.id} direction="up" delay={0.1 + i * 0.08}>
-            <Link
-              to={opp.applyUrl && opp.applyUrl !== "#" ? opp.applyUrl : (typeToSlug[opp.type] || "/category/opportunities")}
+            <Link href={opp.applyUrl && opp.applyUrl !== "#" ? opp.applyUrl : (typeToSlug[opp.type] || "/category/opportunities")}
               className="glass-panel rounded-xl p-4 card-hover-glass block group"
               target={opp.applyUrl && opp.applyUrl !== "#" ? "_blank" : undefined}
               rel={opp.applyUrl && opp.applyUrl !== "#" ? "noopener noreferrer" : undefined}

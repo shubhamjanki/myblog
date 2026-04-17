@@ -1,9 +1,12 @@
-import { Navigate, useLocation } from "react-router-dom";
+"use client";
+
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function CmsGuard({ children }: { children: React.ReactNode }) {
   const { user, loading, isAdmin, isWriter } = useAuth();
-  const location = useLocation();
+  const pathname = usePathname();
+  const router = useRouter();
 
   if (loading) {
     return (
@@ -17,11 +20,13 @@ export default function CmsGuard({ children }: { children: React.ReactNode }) {
   }
 
   if (!user) {
-    return <Navigate to={`/auth?redirect=${encodeURIComponent(location.pathname)}`} replace />;
+    router.replace(`/auth?redirect=${encodeURIComponent(pathname)}`);
+    return null;
   }
 
   if (!isAdmin && !isWriter) {
-    return <Navigate to="/cms/unauthorized" replace />;
+    router.replace("/cms/unauthorized");
+    return null;
   }
 
   return <>{children}</>;

@@ -1,5 +1,7 @@
+"use client";
+
 import { ArrowRight, Clock } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import heroOrb from "@/assets/hero-orb.png";
 import ScrollReveal from "@/components/ScrollReveal";
 import LazyImage from "@/components/LazyImage";
@@ -65,8 +67,7 @@ const HeroArticle = () => {
             ))}
           </div>
         </div>
-        <Link
-          to={`/article/${hero.slug}`}
+        <Link href={`/article/${hero.slug}`}
           className="lux-button relative z-10 flex items-center gap-2 border border-border/60 rounded-full px-5 py-2.5 text-sm font-medium text-foreground w-fit"
         >
           Read article

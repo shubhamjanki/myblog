@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useRef, ReactNode } from "react";
 
 interface IntersectionObserverOptions {
