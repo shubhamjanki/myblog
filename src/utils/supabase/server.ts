@@ -8,9 +8,10 @@ export async function createClient() {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
+    console.error("Supabase server connection failed: Missing environment variables.");
     return createServerClient<Database>(
-      "https://placeholder.supabase.co",
-      "placeholder-key",
+      "https://placeholder-project.supabase.co",
+      "placeholder-anon-key",
       {
         cookies: {
           getAll() {

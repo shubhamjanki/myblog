@@ -147,8 +147,7 @@ const Navbar = () => {
         {/* Left: Logo + Nav */}
         <div className="flex items-center gap-3 md:gap-6">
           <Link href="/" className="flex items-center gap-2 font-display font-bold text-lg text-foreground">
-            <Globe className="w-5 h-5 text-primary" />
-            <span>Logo</span>
+            <span>TechVerse</span>
           </Link>
 
           {/* Mobile search trigger */}
@@ -184,7 +183,7 @@ const Navbar = () => {
                           {item.children.map((child) => (
                             <Link
                               key={child.path}
-                              to={child.path}
+                              href={child.path}
                               onClick={() => setActiveDropdown(null)}
                               className="px-3 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-accent rounded-lg transition-colors whitespace-nowrap block"
                             >
@@ -198,7 +197,7 @@ const Navbar = () => {
                             {group.items.map((subItem) => (
                               <Link
                                 key={subItem.path}
-                                to={subItem.path}
+                                href={subItem.path}
                                 onClick={() => setActiveDropdown(null)}
                                 className="px-3 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-accent rounded-lg transition-colors whitespace-nowrap block"
                               >
@@ -260,7 +259,7 @@ const Navbar = () => {
                     {searchResults.map((article) => (
                       <Link
                         key={article.id}
-                        to={`/article/${article.slug}`}
+                        href={`/article/${article.slug}`}
                         onClick={() => { setSearchOpen(false); setSearchQuery(""); setSearchResults([]); }}
                         className="px-3 py-2.5 rounded-lg hover:bg-muted/60 transition-colors block"
                       >
@@ -362,7 +361,7 @@ const Navbar = () => {
                   searchResults.map((article) => (
                     <Link
                       key={article.id}
-                      to={`/article/${article.slug}`}
+                      href={`/article/${article.slug}`}
                       onClick={() => { setSearchOpen(false); setSearchQuery(""); setSearchResults([]); setMobileOpen(false); }}
                       className="px-3 py-2.5 rounded-lg hover:bg-muted/60 transition-colors block"
                     >
@@ -391,7 +390,7 @@ const Navbar = () => {
                   {item.children.map((child) => (
                     <Link
                       key={child.path}
-                      to={child.path}
+                      href={child.path}
                       onClick={() => setMobileOpen(false)}
                       className="px-3 py-1.5 text-sm text-foreground/70 hover:text-foreground hover:bg-muted/60 rounded-lg transition-colors"
                     >
@@ -404,7 +403,7 @@ const Navbar = () => {
                       {group.items.map((subItem) => (
                         <Link
                           key={subItem.path}
-                          to={subItem.path}
+                          href={subItem.path}
                           onClick={() => setMobileOpen(false)}
                           className="px-3 py-1.5 text-sm text-foreground/70 hover:text-foreground hover:bg-muted/60 rounded-lg transition-colors block"
                         >

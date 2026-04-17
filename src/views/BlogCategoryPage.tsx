@@ -98,7 +98,7 @@ const BlogCategoryPage = () => {
             {subcategories.map((s) => (
               <Link
                 key={s.slug}
-                to={`/category/${s.slug}`}
+                href={`/category/${s.slug}`}
                 className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 ${
                   slug === s.slug || (!slug && s.slug === "tech-blog") || (slug === "tech-blog" && s.slug === "tech-blog")
                     ? "bg-foreground text-background"
@@ -260,7 +260,7 @@ const BlogCategoryPage = () => {
                 </h3>
                 <div className="space-y-3">
                   {recentPosts.slice(0, 4).map((post, i) => (
-                    <Link key={i} to="/article" className="flex items-start gap-3 group cursor-pointer">
+                    <Link key={i} href="/article" className="flex items-start gap-3 group cursor-pointer">
                       <span className="text-2xl font-display font-bold text-muted-foreground/30">{String(i + 1).padStart(2, "0")}</span>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">

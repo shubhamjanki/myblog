@@ -96,7 +96,7 @@ const ResourcesDirectoryPage = () => {
             {subcategories.map((s) => (
               <Link
                 key={s.slug}
-                to={`/category/${s.slug}`}
+                href={`/category/${s.slug}`}
                 className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 ${
                   slug === s.slug || (!slug && s.slug === "resources") || (slug === "resources" && s.slug === "resources")
                     ? "bg-foreground text-background"

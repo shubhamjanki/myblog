@@ -59,7 +59,7 @@ export default function CmsDashboard() {
               { label: "View Blog", to: "/", icon: ExternalLink },
               { label: "Manage Media", to: "/cms/media", icon: Image },
             ].map(a => (
-              <Link key={a.label} to={a.to} className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 hover:-translate-y-px" style={{ background: "rgba(245, 158, 11, 0.08)", color: amber }}>
+              <Link key={a.label} href={a.to} className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 hover:-translate-y-px" style={{ background: "rgba(245, 158, 11, 0.08)", color: amber }}>
                 <a.icon className="w-4 h-4" /> {a.label}
               </Link>
             ))}

@@ -107,8 +107,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-border/30">
           <div className="flex items-center gap-2 text-foreground">
-            <Globe className="w-4 h-4 text-primary" />
-            <span className="font-display font-bold text-sm">{blogTitle || "My Kind of Copy"}</span>
+            <span className="font-display font-bold text-sm">{blogTitle || "TechVerse"}</span>
             <span className="text-xs text-muted-foreground ml-2">
               © {new Date().getFullYear()} All rights reserved.
             </span>

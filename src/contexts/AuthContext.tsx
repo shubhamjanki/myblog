@@ -55,6 +55,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
+    if (!supabase?.auth) {
+      setLoading(false);
+      return;
+    }
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         setSession(session);
@@ -81,9 +86,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         fetchRoles(session.user.id);
       }
       setLoading(false);
+    }).catch(() => {
+      setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => subscription?.unsubscribe();
   }, []);
 
   const signOut = async () => {

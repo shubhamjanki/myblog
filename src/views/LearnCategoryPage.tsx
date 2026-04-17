@@ -122,7 +122,7 @@ const LearnCategoryPage = () => {
             {subcategoryFilters.map((f) => (
               <Link
                 key={f.slug}
-                to={`/category/${f.slug}`}
+                href={`/category/${f.slug}`}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 ${
                   slug === f.slug || (!slug && f.slug === "learn") || (slug === "learn" && f.slug === "learn")
                     ? "bg-foreground text-background"
