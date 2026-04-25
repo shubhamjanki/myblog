@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Clock } from "lucide-react";
+import { ArrowRight, Clock, Bookmark } from "lucide-react";
 import Link from "next/link";
 import heroOrb from "@/assets/hero-orb.png";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -23,7 +23,7 @@ const HeroArticle = () => {
       <ScrollReveal direction="up" delay={0.1} duration={0.9}>
         <div className="relative glass-panel rounded-2xl p-8 overflow-hidden min-h-[400px] flex flex-col justify-center items-center">
           <p className="text-muted-foreground text-sm">No published articles yet. Create one in the CMS.</p>
-          <img src={heroOrb} alt="" className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] md:w-[400px] opacity-40 pointer-events-none" />
+          <img src={heroOrb.src} alt="" className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] md:w-[400px] opacity-40 pointer-events-none" />
         </div>
       </ScrollReveal>
     );
@@ -37,9 +37,86 @@ const HeroArticle = () => {
     return `${Math.floor(hours / 24)}d ago`;
   };
 
+  // Get initials for the avatar
+  const initials = (hero.author || "AU")
+    .split(" ")
+    .map(w => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
+  const readTime = Math.max(3, Math.ceil((hero.excerpt?.length ?? 800) / 200));
+
   return (
     <ScrollReveal direction="up" delay={0.1} duration={0.9}>
-      <div className="relative glass-panel rounded-2xl p-8 overflow-hidden min-h-[400px] flex flex-col justify-between">
+      {/* ── Mobile hero card (ink-style gradient) ── */}
+      <Link
+        href={`/article/${hero.slug}`}
+        className="relative block rounded-2xl overflow-hidden lg:hidden"
+        style={{ minHeight: 220 }}
+      >
+        {/* Background: cover image or deep gradient */}
+        {hero.coverImage ? (
+          <LazyImage
+            src={hero.coverImage}
+            alt={hero.title}
+            containerClassName="absolute inset-0 w-full h-full"
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#3730a3] via-[#4f46e5] to-[#7c3aed]" />
+        )}
+        {/* Scrim */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+        {/* Subtle star-field texture using box-shadows */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 p-5">
+          {/* Badge */}
+          <span className="inline-block px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white/90 text-[10px] font-semibold tracking-widest uppercase mb-4">
+            Editor&apos;s Pick
+          </span>
+
+          <h1 className="font-display text-xl font-bold text-white leading-snug mb-5 line-clamp-3">
+            {hero.title}
+          </h1>
+
+          {/* Author row */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white text-xs font-bold border border-white/30">
+                {initials}
+              </div>
+              <div>
+                <p className="text-white/90 text-sm font-medium leading-none">
+                  {hero.author || "Staff Writer"}
+                </p>
+                <p className="text-white/50 text-xs mt-0.5">
+                  <Clock className="inline w-3 h-3 mr-0.5" />
+                  {readTime} min read
+                </p>
+              </div>
+            </div>
+            <button
+              className="w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center"
+              aria-label="Save"
+              onClick={e => e.preventDefault()}
+            >
+              <Bookmark className="w-4 h-4 text-white/80" />
+            </button>
+          </div>
+        </div>
+      </Link>
+
+      {/* ── Desktop hero (original style) ── */}
+      <div className="relative glass-panel rounded-2xl p-8 overflow-hidden min-h-[400px] flex-col justify-between hidden lg:flex">
         {hero.coverImage && (
           <LazyImage src={hero.coverImage} alt={hero.title} containerClassName="absolute inset-0 rounded-2xl overflow-hidden" className="w-full h-full object-cover opacity-20" />
         )}
@@ -74,7 +151,7 @@ const HeroArticle = () => {
           <ArrowRight className="w-4 h-4" />
         </Link>
         <img
-          src={heroOrb}
+          src={heroOrb.src}
           alt=""
           className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] md:w-[400px] opacity-80 pointer-events-none"
         />

@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       .from("user_roles")
       .select("role")
       .eq("user_id", userId);
-    setRoles(data?.map((r) => r.role) ?? []);
+    setRoles(data?.map((r: any) => r.role) ?? []);
   };
 
   useEffect(() => {

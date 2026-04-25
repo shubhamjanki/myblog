@@ -88,8 +88,12 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans overflow-x-hidden;
     font-family: 'DM Sans', sans-serif;
+  }
+  
+  html {
+    @apply overflow-x-hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -156,5 +160,19 @@
   .group:hover .lux-image img {
     transform: scale(1.06);
     filter: brightness(1.05);
+  }
+
+  /* Hide scrollbar while keeping scroll functionality */
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Mobile text-category colour helper */
+  .text-category {
+    color: hsl(var(--category-color));
   }
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeader from "@/components/SectionHeader";
 import PostCard from "@/components/PostCard";
@@ -11,7 +10,7 @@ import thumb2 from "@/assets/article-thumb-2.jpg";
 import thumb3 from "@/assets/article-thumb-3.jpg";
 import thumb4 from "@/assets/article-thumb-4.jpg";
 
-const fallbackImages = [thumb1, thumb2, thumb3, thumb4];
+const fallbackImages = [thumb1.src, thumb2.src, thumb3.src, thumb4.src];
 const tutorialCategories = ["programming", "tutorials", "career guides", "career-guides", "learn"];
 
 const timeAgo = (dateStr: string) => {
@@ -50,16 +49,16 @@ const TutorialsSection = () => {
       <SectionHeader label="Popular Tutorials" viewMoreLink="/category/tutorials" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {tutorials.map((post, i) => (
-          <Link key={post.id} href={`/article/${post.slug}`} className="block">
-            <PostCard
-              title={post.title}
-              image={post.coverImage || fallbackImages[i % fallbackImages.length]}
-              category={post.category}
-              timeAgo={timeAgo(post.publishDate)}
-              tags={post.tags.slice(0, 2).map(t => `#${t}`)}
-              delay={0.1 + i * 0.08}
-            />
-          </Link>
+          <PostCard
+            key={post.id}
+            title={post.title}
+            slug={post.slug}
+            image={post.coverImage || fallbackImages[i % fallbackImages.length]}
+            category={post.category}
+            timeAgo={timeAgo(post.publishDate)}
+            tags={post.tags.slice(0, 2).map(t => `#${t}`)}
+            delay={0.1 + i * 0.08}
+          />
         ))}
       </div>
     </section>
