@@ -36,7 +36,7 @@ const OpportunitiesCategoryPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const categoryTitle = slug
-    ? slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
+    ? (Array.isArray(slug) ? slug[0] : slug).split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
     : "Opportunities";
 
   const preFilterType = slug === "internships" ? "Internship" : slug === "jobs" ? "Job" : slug === "scholarships" ? "Scholarship" : slug === "competitions" ? "Competition" : null;
@@ -95,9 +95,8 @@ const OpportunitiesCategoryPage = () => {
               </div>
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border transition-colors ${
-                  showFilters ? "bg-foreground text-background border-foreground" : "border-border/50 text-muted-foreground hover:text-foreground"
-                }`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border transition-colors ${showFilters ? "bg-foreground text-background border-foreground" : "border-border/50 text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 <Filter className="w-4 h-4" /> Filters
               </button>
@@ -111,9 +110,8 @@ const OpportunitiesCategoryPage = () => {
               <button
                 key={f}
                 onClick={() => setActiveType(f)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeType === f ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
-                }`}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${activeType === f ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+                  }`}
               >
                 {f}
               </button>
@@ -129,9 +127,8 @@ const OpportunitiesCategoryPage = () => {
                     <button
                       key={l}
                       onClick={() => setActiveLocation(l)}
-                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                        activeLocation === l ? "bg-primary text-primary-foreground" : "bg-muted/60 text-muted-foreground hover:text-foreground"
-                      }`}
+                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${activeLocation === l ? "bg-primary text-primary-foreground" : "bg-muted/60 text-muted-foreground hover:text-foreground"
+                        }`}
                     >
                       {l}
                     </button>

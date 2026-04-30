@@ -30,7 +30,7 @@ const ResourcesDirectoryPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const categoryTitle = slug
-    ? slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
+    ? (Array.isArray(slug) ? slug[0] : slug).split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
     : "Resources";
 
   const activeSubcat = slug && slug !== "resources" ? slug : null;
@@ -97,11 +97,10 @@ const ResourcesDirectoryPage = () => {
               <Link
                 key={s.slug}
                 href={`/category/${s.slug}`}
-                className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 ${
-                  slug === s.slug || (!slug && s.slug === "resources") || (slug === "resources" && s.slug === "resources")
+                className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 ${slug === s.slug || (!slug && s.slug === "resources") || (slug === "resources" && s.slug === "resources")
                     ? "bg-foreground text-background"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/60 border border-border/30"
-                }`}
+                  }`}
               >
                 {s.label}
               </Link>
@@ -117,9 +116,8 @@ const ResourcesDirectoryPage = () => {
                 <button
                   key={f}
                   onClick={() => setActivePricing(f)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                    activePricing === f ? "bg-foreground text-background" : "bg-muted/60 text-muted-foreground hover:text-foreground"
-                  }`}
+                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${activePricing === f ? "bg-foreground text-background" : "bg-muted/60 text-muted-foreground hover:text-foreground"
+                    }`}
                 >
                   {f}
                 </button>
@@ -171,11 +169,10 @@ const ResourcesDirectoryPage = () => {
                         </div>
                         <span className="text-xs text-category font-medium">{r.category}</span>
                       </div>
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
-                        r.pricing === "Free" ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" :
-                        r.pricing === "Freemium" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" :
-                        "bg-amber-500/10 text-amber-600 dark:text-amber-400"
-                      }`}>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${r.pricing === "Free" ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" :
+                          r.pricing === "Freemium" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" :
+                            "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                        }`}>
                         {r.pricing}
                       </span>
                     </div>
@@ -221,11 +218,10 @@ const ResourcesDirectoryPage = () => {
                           ))}
                           <span className="text-[10px] text-muted-foreground ml-1">({r.reviews})</span>
                         </div>
-                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
-                          r.pricing === "Free" ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" :
-                          r.pricing === "Freemium" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" :
-                          "bg-amber-500/10 text-amber-600 dark:text-amber-400"
-                        }`}>
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${r.pricing === "Free" ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" :
+                            r.pricing === "Freemium" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" :
+                              "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                          }`}>
                           {r.pricing}
                         </span>
                       </div>
@@ -253,11 +249,10 @@ const ResourcesDirectoryPage = () => {
                       <Star key={j} className={`w-3 h-3 ${j < Math.round(r.rating) ? "text-amber-400 fill-amber-400" : "text-muted-foreground/20"}`} />
                     ))}
                   </div>
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0 ${
-                    r.pricing === "Free" ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" :
-                    r.pricing === "Freemium" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" :
-                    "bg-amber-500/10 text-amber-600 dark:text-amber-400"
-                  }`}>
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0 ${r.pricing === "Free" ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" :
+                      r.pricing === "Freemium" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" :
+                        "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                    }`}>
                     {r.pricing}
                   </span>
                   <div className="flex gap-1 flex-shrink-0">

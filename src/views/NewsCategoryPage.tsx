@@ -68,8 +68,9 @@ const NewsCategoryPage = () => {
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [breakingIndex, setBreakingIndex] = useState(0);
 
-  const categoryTitle = slug
-    ? slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
+  const slugStr = Array.isArray(slug) ? slug[0] : slug;
+  const categoryTitle = slugStr
+    ? slugStr.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
     : "News";
 
   return (
@@ -133,11 +134,10 @@ const NewsCategoryPage = () => {
                 <button
                   key={f}
                   onClick={() => setActiveFilter(f)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                    activeFilter === f
-                      ? "bg-foreground text-background"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
-                  }`}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${activeFilter === f
+                    ? "bg-foreground text-background"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+                    }`}
                 >
                   {f}
                 </button>
@@ -148,11 +148,10 @@ const NewsCategoryPage = () => {
                 <button
                   key={tag}
                   onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 ${
-                    activeTag === tag
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-tag text-tag-foreground hover:bg-primary/10"
-                  }`}
+                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 ${activeTag === tag
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-tag text-tag-foreground hover:bg-primary/10"
+                    }`}
                 >
                   {tag}
                 </button>
@@ -165,7 +164,7 @@ const NewsCategoryPage = () => {
         <ScrollReveal direction="scale" duration={0.9}>
           <Link href="/article" className="relative rounded-2xl overflow-hidden h-[380px] md:h-[440px] cursor-pointer group card-hover-glass mb-10 block">
             <div className="lux-image h-full">
-              <img src={featuredArticle.image} alt={featuredArticle.title} className="w-full h-full object-cover" />
+              <img src={(featuredArticle.image as any).src || featuredArticle.image} alt={featuredArticle.title} className="w-full h-full object-cover" />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/30 to-transparent" />
             <div className="absolute top-4 left-4">
@@ -210,7 +209,7 @@ const NewsCategoryPage = () => {
                     <span className="text-xs text-muted-foreground font-mono mb-1 block">{article.time}</span>
                     <Link href="/article" className="flex gap-4 cursor-pointer group card-hover-glass rounded-xl p-3 -ml-2">
                       <div className="lux-image w-[140px] h-[95px] flex-shrink-0 rounded-lg">
-                        <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+                        <img src={(article.image as any).src || article.image} alt={article.title} className="w-full h-full object-cover" />
                       </div>
                       <div className="flex flex-col justify-center flex-1 min-w-0">
                         <div className="flex items-center gap-2 text-xs mb-1">
@@ -236,7 +235,7 @@ const NewsCategoryPage = () => {
                 <PostCard
                   key={i}
                   title={a.title}
-                  image={a.image}
+                  image={(a.image as any).src || a.image}
                   category={a.category}
                   timeAgo={a.timeAgo}
                   delay={0.1 + i * 0.06}
@@ -250,9 +249,8 @@ const NewsCategoryPage = () => {
                 {[1, 2, 3, 4, 5].map((p) => (
                   <button
                     key={p}
-                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                      p === 1 ? "bg-foreground text-background" : "text-muted-foreground hover:bg-muted/60"
-                    }`}
+                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${p === 1 ? "bg-foreground text-background" : "text-muted-foreground hover:bg-muted/60"
+                      }`}
                   >
                     {p}
                   </button>
@@ -274,7 +272,7 @@ const NewsCategoryPage = () => {
                     <PostCard
                       key={i}
                       title={a.title}
-                      image={a.image}
+                      image={(a.image as any).src || a.image}
                       category={a.category}
                       timeAgo={a.timeAgo}
                       variant="horizontal"

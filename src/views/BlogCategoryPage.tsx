@@ -62,7 +62,7 @@ const BlogCategoryPage = () => {
   const [activeSort, setActiveSort] = useState("Latest");
 
   const categoryTitle = slug
-    ? slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
+    ? (Array.isArray(slug) ? slug[0] : slug).split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
     : "Tech Blog";
 
   return (
@@ -99,11 +99,10 @@ const BlogCategoryPage = () => {
               <Link
                 key={s.slug}
                 href={`/category/${s.slug}`}
-                className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 ${
-                  slug === s.slug || (!slug && s.slug === "tech-blog") || (slug === "tech-blog" && s.slug === "tech-blog")
-                    ? "bg-foreground text-background"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/60 border border-border/30"
-                }`}
+                className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 ${slug === s.slug || (!slug && s.slug === "tech-blog") || (slug === "tech-blog" && s.slug === "tech-blog")
+                  ? "bg-foreground text-background"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/60 border border-border/30"
+                  }`}
               >
                 {s.label}
               </Link>
@@ -116,7 +115,7 @@ const BlogCategoryPage = () => {
           <Link href="/article" className="block mb-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 glass-panel rounded-2xl p-5 card-hover-glass group">
               <div className="lux-image h-[280px] rounded-xl">
-                <img src={featuredPost.image} alt={featuredPost.title} className="w-full h-full object-cover" />
+                <img src={(featuredPost.image as any).src || featuredPost.image} alt={featuredPost.title} className="w-full h-full object-cover" />
               </div>
               <div className="flex flex-col justify-center py-2">
                 <span className="text-xs font-medium text-category mb-2">{featuredPost.category}</span>
@@ -125,7 +124,7 @@ const BlogCategoryPage = () => {
                 </h2>
                 <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{featuredPost.excerpt}</p>
                 <div className="flex items-center gap-3">
-                  <img src={featuredPost.author.avatar} alt={featuredPost.author.name} className="w-8 h-8 rounded-full object-cover" />
+                  <img src={(featuredPost.author.avatar as any).src || featuredPost.author.avatar} alt={featuredPost.author.name} className="w-8 h-8 rounded-full object-cover" />
                   <div>
                     <span className="text-sm font-medium text-foreground">{featuredPost.author.name}</span>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -154,7 +153,7 @@ const BlogCategoryPage = () => {
                 <ScrollReveal key={i} direction="up" delay={0.1 + i * 0.08}>
                   <Link href="/article" className="glass-panel rounded-xl p-2.5 pb-3 card-hover-glass group block">
                     <div className="lux-image h-[150px] mb-2">
-                      <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                      <img src={(post.image as any).src || post.image} alt={post.title} className="w-full h-full object-cover" />
                     </div>
                     <span className="text-xs text-category font-medium">{post.category}</span>
                     <p className="text-sm font-medium text-foreground leading-snug group-hover:text-primary transition-colors mt-1 line-clamp-2 mb-2">
@@ -178,9 +177,8 @@ const BlogCategoryPage = () => {
                   <button
                     key={s}
                     onClick={() => setActiveSort(s)}
-                    className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                      activeSort === s ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
-                    }`}
+                    className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${activeSort === s ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
+                      }`}
                   >
                     {s}
                   </button>
@@ -194,7 +192,7 @@ const BlogCategoryPage = () => {
                 <ScrollReveal key={i} direction="up" delay={0.05 + i * 0.04}>
                   <Link href="/article" className="flex gap-5 cursor-pointer group card-hover-glass rounded-xl p-3">
                     <div className="lux-image w-[180px] h-[120px] flex-shrink-0 rounded-lg">
-                      <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                      <img src={(post.image as any).src || post.image} alt={post.title} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex flex-col justify-center flex-1 min-w-0">
                       <span className="text-xs text-category font-medium mb-1">{post.category}</span>
@@ -218,9 +216,8 @@ const BlogCategoryPage = () => {
                 {[1, 2, 3, 4].map((p) => (
                   <button
                     key={p}
-                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                      p === 1 ? "bg-foreground text-background" : "text-muted-foreground hover:bg-muted/60"
-                    }`}
+                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${p === 1 ? "bg-foreground text-background" : "text-muted-foreground hover:bg-muted/60"
+                      }`}
                   >
                     {p}
                   </button>
@@ -240,7 +237,7 @@ const BlogCategoryPage = () => {
                 <div className="space-y-3">
                   {topAuthors.map((a, i) => (
                     <div key={i} className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/40 transition-colors cursor-pointer">
-                      <img src={a.avatar} alt={a.name} className="w-10 h-10 rounded-full object-cover" />
+                      <img src={(a.avatar as any).src || a.avatar} alt={a.name} className="w-10 h-10 rounded-full object-cover" />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-foreground">{a.name}</p>
                         <p className="text-xs text-muted-foreground">{a.role}</p>

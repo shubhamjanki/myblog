@@ -3,7 +3,7 @@
 import {
   Search, ChevronDown, LogIn, User, LayoutDashboard, LogOut, Menu, X,
   Loader2, Bell, ArrowLeft, Newspaper, Briefcase, GraduationCap, Trophy,
-  Code, PlayCircle, Moon, Sun, ChevronRight, Zap, Info, Cpu, Layers
+  Code, PlayCircle, Moon, Sun, ChevronRight, Zap, Info, Cpu, Layers, Bookmark
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -56,6 +56,18 @@ const navStructure = [
     children: [
       { label: "Articles", path: "/category/tech-articles", icon: Newspaper },
       { label: "Insights", path: "/category/industry-insights", icon: Info },
+    ],
+  },
+  {
+    label: "Resources",
+    path: "/category/resources",
+    icon: Bookmark,
+    color: "bg-orange-500",
+    children: [
+      { label: "Free Tools", path: "/category/free-tools", icon: Cpu },
+      { label: "AI Tools", path: "/category/ai-tools", icon: Zap },
+      { label: "Free Courses", path: "/category/free-courses", icon: GraduationCap },
+      { label: "Dev Tools", path: "/category/dev-tools", icon: Code },
     ],
   },
 ];
@@ -218,8 +230,8 @@ const Navbar = () => {
                     href={child.path}
                     onClick={() => setMobileOpen(false)}
                     className={`flex items-center justify-between px-3 py-3.5 rounded-2xl transition-all duration-300 ${isActive
-                        ? "bg-white/10 dark:bg-white/5 shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-white/10"
-                        : "hover:bg-white/5"
+                      ? "bg-white/10 dark:bg-white/5 shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-white/10"
+                      : "hover:bg-white/5"
                       }`}
                   >
                     <div className="flex items-center gap-4">
@@ -266,7 +278,7 @@ const Navbar = () => {
   return (
     <>
       <ScrollReveal direction="down" duration={0.7} className="sticky top-0 z-[100] w-full">
-        <nav className="relative isolate flex items-center justify-between px-3 md:px-6 py-3 bg-background/50 backdrop-blur-[24px] saturate-[1.8] md:bg-background/40 md:backdrop-blur-[24px] border-b border-white/10 md:border md:border-white/20 md:rounded-[2rem] md:shadow-[0_8px_32px_rgba(0,0,0,0.08)] mx-0 md:mx-6 mt-0 md:mt-4 transition-all w-full max-w-full overflow-hidden">
+        <nav className="relative isolate flex items-center justify-between px-3 md:px-6 py-3 bg-background/50 backdrop-blur-[24px] saturate-[1.8] md:bg-background/40 md:backdrop-blur-[24px] border-b border-white/10 md:border md:border-white/20 md:rounded-[2rem] md:shadow-[0_8px_32px_rgba(0,0,0,0.08)] mx-0 md:mx-6 mt-0 md:mt-4 transition-all">
           {/* Left: Logo + Nav */}
           <div className="flex items-center gap-3 md:gap-6">
             {pathname !== "/" && (
@@ -301,7 +313,7 @@ const Navbar = () => {
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                         className="absolute top-full left-0 pt-2 z-[200]"
                       >
-                        <div className="bg-background/60 backdrop-blur-[32px] saturate-[2] rounded-[1.5rem] p-4 min-w-[220px] shadow-[0_16px_40px_rgba(0,0,0,0.2)] border border-white/20 pointer-events-auto max-w-[calc(100vw-2rem)]">
+                        <div className="bg-background/80 backdrop-blur-[64px] rounded-[1.5rem] p-4 min-w-[220px] shadow-[0_16px_40px_rgba(0,0,0,0.2)] border border-white/20 pointer-events-auto max-w-[calc(100vw-2rem)]">
                           <div className="flex flex-col gap-0.5">
                             <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-1.5">{item.label}</span>
                             {item.children.map((child) => (
@@ -309,7 +321,7 @@ const Navbar = () => {
                                 key={child.path}
                                 href={child.path}
                                 onClick={() => setActiveDropdown(null)}
-                                className="px-3 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-accent rounded-lg transition-colors whitespace-nowrap block"
+                                className="px-3 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-muted/80 rounded-lg transition-colors whitespace-nowrap block"
                               >
                                 {child.label}
                               </Link>
@@ -369,7 +381,7 @@ const Navbar = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="absolute top-full right-0 mt-2 w-[360px] bg-background/60 backdrop-blur-[32px] saturate-[2] shadow-[0_16px_40px_rgba(0,0,0,0.2)] border border-white/20 rounded-[1.5rem] p-3 z-50 max-h-[400px] overflow-y-auto"
+                    className="absolute top-full right-0 mt-2 w-[360px] bg-background/80 backdrop-blur-[64px] shadow-[0_16px_40px_rgba(0,0,0,0.2)] border border-white/20 rounded-[1.5rem] p-3 z-50 max-h-[400px] overflow-y-auto"
                   >
                     {searching ? (
                       <div className="flex items-center justify-center py-6"><Loader2 className="w-5 h-5 animate-spin" /></div>
@@ -377,7 +389,7 @@ const Navbar = () => {
                       <p className="text-sm text-center py-6">No results for "{searchQuery}"</p>
                     ) : (
                       searchResults.map((article) => (
-                        <Link key={article.id} href={`/article/${article.slug}`} onClick={() => setSearchOpen(false)} className="px-3 py-2.5 rounded-lg hover:bg-white/10 block">
+                        <Link key={article.id} href={`/article/${article.slug}`} onClick={() => setSearchOpen(false)} className="px-3 py-2.5 rounded-lg hover:bg-muted/80 block">
                           <p className="text-sm font-medium">{article.title}</p>
                           <span className="text-xs text-primary/80">{article.category}</span>
                         </Link>
@@ -405,11 +417,11 @@ const Navbar = () => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      className="absolute right-0 top-full mt-2 w-48 bg-background/60 backdrop-blur-[32px] saturate-[2] shadow-2xl border border-white/20 rounded-[1.5rem] p-2 z-50"
+                      className="absolute right-0 top-full mt-2 w-48 bg-background/80 backdrop-blur-[64px] shadow-2xl border border-white/20 rounded-[1.5rem] p-2 z-50"
                     >
-                      <button onClick={() => { router.push(`/profile/${profile?.username || "me"}`); setShowMenu(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-white/10 rounded-xl transition-colors"><User className="w-4 h-4" /> Profile</button>
+                      <button onClick={() => { router.push(`/profile/${profile?.username || "me"}`); setShowMenu(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted/80 rounded-xl transition-colors"><User className="w-4 h-4" /> Profile</button>
                       {(isAdmin || isWriter) && (
-                        <button onClick={() => { router.push("/admin"); setShowMenu(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-white/10 rounded-xl transition-colors"><LayoutDashboard className="w-4 h-4" /> Dashboard</button>
+                        <button onClick={() => { router.push("/admin"); setShowMenu(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted/80 rounded-xl transition-colors"><LayoutDashboard className="w-4 h-4" /> Dashboard</button>
                       )}
                       <button onClick={() => { signOut(); setShowMenu(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-sm text-destructive hover:bg-destructive/10 rounded-xl transition-colors"><LogOut className="w-4 h-4" /> Sign Out</button>
                     </motion.div>
@@ -451,7 +463,7 @@ const Navbar = () => {
             initial="hidden"
             animate="show"
             exit="exit"
-            className="fixed bottom-[85px] left-3 right-3 bg-background/50 backdrop-blur-[40px] saturate-[1.8] z-[120] p-6 rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.4)] border border-white/10 max-h-[75vh] overflow-y-auto lg:hidden"
+            className="fixed bottom-[85px] left-3 right-3 bg-background/50 backdrop-blur-[64px] saturate-[1.8] z-[120] p-6 rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.4)] border border-white/10 max-h-[75vh] overflow-y-auto lg:hidden"
           >
             {/* Header Hooks */}
             <div className="flex items-center justify-between sticky top-0 bg-transparent py-4 z-10">

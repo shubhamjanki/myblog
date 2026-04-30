@@ -84,7 +84,7 @@ const LearnCategoryPage = () => {
   const [activeDifficulty, setActiveDifficulty] = useState<string | null>(null);
 
   const categoryTitle = slug
-    ? slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
+    ? (Array.isArray(slug) ? slug[0] : slug).split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
     : "Learn";
 
   return (
@@ -123,11 +123,10 @@ const LearnCategoryPage = () => {
               <Link
                 key={f.slug}
                 href={`/category/${f.slug}`}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 ${
-                  slug === f.slug || (!slug && f.slug === "learn") || (slug === "learn" && f.slug === "learn")
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 ${slug === f.slug || (!slug && f.slug === "learn") || (slug === "learn" && f.slug === "learn")
                     ? "bg-foreground text-background"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/60 border border-border/30"
-                }`}
+                  }`}
               >
                 {f.icon} {f.label}
               </Link>
@@ -199,9 +198,8 @@ const LearnCategoryPage = () => {
                 <button
                   key={s}
                   onClick={() => setActiveSort(s)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                    activeSort === s ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
-                  }`}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${activeSort === s ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+                    }`}
                 >
                   {s}
                 </button>
@@ -212,9 +210,8 @@ const LearnCategoryPage = () => {
                 <button
                   key={d}
                   onClick={() => setActiveDifficulty(activeDifficulty === d ? null : d)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                    activeDifficulty === d ? difficultyColors[d] : "bg-muted/60 text-muted-foreground hover:text-foreground"
-                  }`}
+                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${activeDifficulty === d ? difficultyColors[d] : "bg-muted/60 text-muted-foreground hover:text-foreground"
+                    }`}
                 >
                   {d}
                 </button>
@@ -231,7 +228,7 @@ const LearnCategoryPage = () => {
               <ScrollReveal key={i} direction="up" delay={0.05 + i * 0.05}>
                 <Link href="/article" className="glass-panel rounded-xl p-2.5 pb-3 card-hover-glass group block">
                   <div className="lux-image h-[140px] mb-2 relative">
-                    <img src={t.image} alt={t.title} className="w-full h-full object-cover" />
+                    <img src={(t.image as any).src || t.image} alt={t.title} className="w-full h-full object-cover" />
                     <div className="absolute top-2 left-2">
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${difficultyColors[t.difficulty]}`}>
                         {t.difficulty}
@@ -266,9 +263,8 @@ const LearnCategoryPage = () => {
             {[1, 2, 3].map((p) => (
               <button
                 key={p}
-                className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                  p === 1 ? "bg-foreground text-background" : "text-muted-foreground hover:bg-muted/60"
-                }`}
+                className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${p === 1 ? "bg-foreground text-background" : "text-muted-foreground hover:bg-muted/60"
+                  }`}
               >
                 {p}
               </button>
